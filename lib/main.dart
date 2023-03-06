@@ -7,6 +7,8 @@ import 'package:untitled/features/database_communication/utils.dart';
 import 'package:untitled/features/home/home_screen.dart';
 import 'package:untitled/features/scan/scan_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:untitled/features/user_login/sign_up_screen.dart';
+import 'package:untitled/features/user_login/splash_screen.dart';
 import 'features/user_login/login_screen.dart';
 import 'firebase_options.dart';
 
@@ -45,10 +47,11 @@ void main() async {
     ),
     themeMode: ThemeMode.system,
     initialRoute: '/',
-    routes: {'/': (ctx) => AuthScreen(),
+    routes: {'/': (ctx) => SplashScreen(),
+      AuthScreen.routeName: (ctx) => AuthScreen(),
       HomeScreen.routeName: (ctx) => HomeScreen(),
       ScanScreen.routeName: (ctx) => ScanScreen(),
-      ScanScreen.routeName: (ctx) => ScanScreen(),
+      SignUpScreen.routeName: (ctx) => SignUpScreen(),
 
       // AddBeerScreen.routeName: (ctx) => AddBeerScreen(),
     },

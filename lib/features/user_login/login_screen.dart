@@ -1,7 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:untitled/features/home/home_screen.dart';
+import 'package:untitled/features/user_login/sign_up_screen.dart';
 
 class AuthScreen extends StatefulWidget {
+  static const routeName = "/auth_screen";
   @override
   _AuthScreenState createState() => _AuthScreenState();
 }
@@ -10,15 +13,26 @@ class _AuthScreenState extends State<AuthScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  bool _isLogin = true;
+  bool _isLoggedIn = true;
   bool _isLoading = false;
-
-
+  @override
+  void initState() {
+    FirebaseAuth.instance.currentUser ?? (_isLoggedIn = false);
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
+    if (_isLoggedIn){Navigator.pushReplacementNamed(context, HomeScreen.routeName);}
     return Scaffold(
       appBar: AppBar(
-        title: Text('Beer Catalog App'),actions: [TextButton(onPressed: (){/*TODO go to sign up screen*/}, child: Text("Sign Up"))],
+        title: Text('Beer Catalog App'),
+        actions: [
+          TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, SignUpScreen.routeName);
+              },
+              child: Text("Sign Up"))
+        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -60,7 +74,6 @@ class _AuthScreenState extends State<AuthScreen> {
                 _isLoading
                     ? CircularProgressIndicator()
                     : ElevatedButton(
-
                         onPressed: _signIn,
                         child: Text('Sign In'),
                       ),
