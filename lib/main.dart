@@ -2,8 +2,8 @@ import 'dart:typed_data';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
-import 'package:untitled/features/database_comunication/add_beer_screen.dart';
-import 'package:untitled/features/database_comunication/utils.dart';
+import 'package:untitled/features/database_communication/add_beer_screen.dart';
+import 'package:untitled/features/database_communication/utils.dart';
 import 'package:untitled/features/home/home_screen.dart';
 import 'package:untitled/features/scan/scan_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -44,9 +44,9 @@ void main() async {
       // fontFamily: GoogleFonts.notoSans().fontFamily,
     ),
     themeMode: ThemeMode.system,
-    initialRoute: '/',
+    initialRoute: HomeScreen.routeName,
     routes: {'/': (ctx) => AuthScreen(),
-      Home.routeName: (ctx) => Home(),
+      HomeScreen.routeName: (ctx) => HomeScreen(),
       ScanScreen.routeName: (ctx) => ScanScreen(),
       // AddBeerScreen.routeName: (ctx) => AddBeerScreen(),
     },
