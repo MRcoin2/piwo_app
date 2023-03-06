@@ -23,56 +23,86 @@ class _ScannerState extends State<Scanner> {
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height - window.viewInsets.top,
         child: MobileScanner(
-          // fit: BoxFit.contain,
+          // Initialize the MobileScanner widget with a MobileScannerController
           controller: MobileScannerController(
-            facing: CameraFacing.back,
-            torchEnabled: false,
+            facing: CameraFacing.back, // Use the back-facing camera
+            torchEnabled: false, // Disable the flashlight
           ),
+          // Set the onDetect callback to handle the detected barcode
           onDetect: (capture) async {
             final List<Barcode> barcodes = capture.barcodes;
             final Uint8List? image = capture.image;
-            //TODO make sure only one barcode gets scanned (and check the type of barcode)
             for (final barcode in barcodes) {
               debugPrint('Barcode found! ${barcode.rawValue}');
-              //TODO make loading animation when waiting for database response
-              if (await checkIfBarcodeExists(barcode.rawValue.toString())) {
-                if (!context.mounted) return;
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      title: Text('Success'),
-                      content: Text(
-                          "Added ${FirebaseFirestore.instance.collection('beers').doc(barcode.rawValue.toString()).get().then((DocumentSnapshot documentSnapshot) async {
-                          return await documentSnapshot.get('name');
-                      }).catchError((error) {
-                        print('Error getting document: $error');
-                      })} to your collection."),
-                      //TODO make the name display properly
-                      actions: <Widget>[
-                        TextButton(
-                          onPressed: () => Navigator.of(context).pop(),
-                          child: Text('OK'),
-                        ),
-                      ],
-                    );
-                  },
-                ).then((value) => Navigator.pushReplacementNamed(
-                    context, HomeScreen.routeName));
-                //TODO handle already existing beer
-              } else {
-                if (!context.mounted) return;
-                Navigator.pushReplacementNamed(context, AddBeerScreen.routeName,
-                    arguments: BeerData(barcode.rawValue.toString()));
-              }
+
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text('Scanned Barcode'),
+                    content: FutureBuilder<DocumentSnapshot>(
+                      future: FirebaseFirestore.instance
+                          .collection('beers')
+                          .doc(barcode.rawValue.toString())
+                          .get(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<DocumentSnapshot> snapshot) {
+                        if (snapshot.hasError) {
+                          return Text('Error getting document: ${snapshot.error}');
+                        }
+
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          // Display a loading animation while the document is being fetched
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+
+                        // Check if the document exists
+                        if (snapshot.data != null && snapshot.data!.exists) {
+                          //TODO add beer to users collection in firestore
+                          // Document exists, show success message
+                          return Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                "${snapshot.data?.get('name')} was added to your collection.",
+                              ),
+                              SizedBox(height: 16),
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                  Navigator.pushReplacementNamed(
+                                      context, HomeScreen.routeName);
+                                },
+                                child: Text('OK'),
+                              ),
+                            ],
+                          );
+                        } else {
+                          // Document does not exist, navigate to AddBeerScreen
+                          Navigator.pushReplacementNamed(
+                            context,
+                            AddBeerScreen.routeName,
+                            arguments: BeerData(barcode.rawValue.toString()),
+                          );
+                          return SizedBox.shrink();
+                        }
+                      },
+                    ),
+                  );
+                },
+              );
             }
           },
         ),
       ),
+      // Show an SVG overlay on top of the camera preview
       SvgPicture.asset(
         "assets/svg/scan_overlay.svg",
         colorFilter:
-            ColorFilter.mode(Theme.of(context).primaryColor, BlendMode.srcIn),
+        ColorFilter.mode(Theme.of(context).primaryColor, BlendMode.srcIn),
       ),
     ]);
   }
