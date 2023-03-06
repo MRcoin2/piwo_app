@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class AddBeerForm extends StatefulWidget {
+  final String barcode;
+  const AddBeerForm({Key? key, required this.barcode}) : super(key: key);
   @override
   _AddBeerFormState createState() => _AddBeerFormState();
 }
@@ -9,7 +11,6 @@ class AddBeerForm extends StatefulWidget {
 class _AddBeerFormState extends State<AddBeerForm> {
   final _formKey = GlobalKey<FormState>();
 
-  final TextEditingController _barcodeController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _breweryController = TextEditingController();
   final TextEditingController _styleController = TextEditingController();
@@ -20,7 +21,7 @@ class _AddBeerFormState extends State<AddBeerForm> {
     try {
       await FirebaseFirestore.instance
           .collection('beers')
-          .doc(_barcodeController.text)
+          .doc(widget.barcode)
           .set({
         'name': _nameController.text,
         'brewery': _breweryController.text,
@@ -32,11 +33,13 @@ class _AddBeerFormState extends State<AddBeerForm> {
         SnackBar(content: Text('Beer added successfully')),
       );
 
-      _barcodeController.clear();
       _nameController.clear();
       _breweryController.clear();
       _styleController.clear();
       _alcoholContentController.clear();
+
+      Navigator.popAndPushNamed(context, "/");
+
     } catch (error) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Error adding beer: $error')),
@@ -62,27 +65,13 @@ class _AddBeerFormState extends State<AddBeerForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Add Beer'),
-      ),
-      body: Padding(
+    return Padding(
         padding: const EdgeInsets.all(8.0),
         child: Form(
           key: _formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              _buildTextFormField(
-                _barcodeController,
-                'Barcode',
-                (value) {
-                  if (value!.isEmpty) {
-                    return 'Please enter a barcode';
-                  }
-                  return null;
-                },
-              ),
               _buildTextFormField(
                 _nameController,
                 'Name',
@@ -139,7 +128,6 @@ class _AddBeerFormState extends State<AddBeerForm> {
             ],
           ),
         ),
-      ),
-    );
+      );
   }
 }

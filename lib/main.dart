@@ -7,6 +7,7 @@ import 'package:untitled/features/database_comunication/utils.dart';
 import 'package:untitled/features/home/home_screen.dart';
 import 'package:untitled/features/scan/scan_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'features/user_login/login_screen.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -44,8 +45,8 @@ void main() async {
     ),
     themeMode: ThemeMode.system,
     initialRoute: '/',
-    routes: {
-      '/': (ctx) => Home(),
+    routes: {'/': (ctx) => AuthScreen(),
+      Home.routeName: (ctx) => Home(),
       ScanScreen.routeName: (ctx) => ScanScreen(),
       // AddBeerScreen.routeName: (ctx) => AddBeerScreen(),
     },
@@ -60,7 +61,7 @@ void main() async {
             );
           },
         );
-      }
+      }else if(settings.name == AddBeerScreen.routeName){}
       assert(false, 'Need to implement ${settings.name}');
         // return ...;
       // } else if (settings.name == '/something-else') {

@@ -14,16 +14,19 @@ class _AddBeerScreenState extends State<AddBeerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [const Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Text("New Beer Found !!! :D"),
-        ),Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(widget.barcodeId),
+      appBar: AppBar(),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Text("New Beer Found !!! :D"),
+          ),Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(widget.barcodeId),
+          ),
+            AddBeerForm(barcode: widget.barcodeId),
+          ],
         ),
-          AddBeerForm(),
-        ],
       ),
     );
   }

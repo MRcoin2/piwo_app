@@ -33,13 +33,11 @@ class _ScannerState extends State<Scanner> {
             for (final barcode in barcodes) {
               debugPrint('Barcode found! ${barcode.rawValue}');
               //TODO make loading animation when waiting for database response
-              if (await checkIfBarcodeExists(barcode.toString())) {
+              if (await checkIfBarcodeExists(barcode.rawValue.toString())) {
                 //TODO handle already existing beer
               } else {
                 if (!context.mounted) return;
-                BeerData data = BeerData();
-                data.barcodeId = barcode.toString();
-                Navigator.pushNamed(context, AddBeerScreen.routeName,arguments: {data});
+                Navigator.pushNamed(context, AddBeerScreen.routeName,arguments: BeerData(barcode.rawValue.toString()));
               }
             }
           },

@@ -4,6 +4,7 @@ import 'package:untitled/features/home/home_tab.dart';
 import '../database_comunication/add_beer_screen.dart';
 
 class Home extends StatefulWidget {
+  static const String routeName = "/home";
   const Home({Key? key}) : super(key: key);
 
   @override
