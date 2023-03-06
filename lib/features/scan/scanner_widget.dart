@@ -37,7 +37,7 @@ class _ScannerState extends State<Scanner> {
                 //TODO handle already existing beer
               } else {
                 if (!context.mounted) return;
-                Navigator.pushNamed(context, AddBeerScreen.routeName,arguments: BeerData(barcode.rawValue.toString()));
+                Navigator.pushReplacementNamed(context, AddBeerScreen.routeName,arguments: BeerData(barcode.rawValue.toString()));
               }
             }
           },

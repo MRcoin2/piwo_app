@@ -3,15 +3,15 @@ import 'package:untitled/features/home/home_tab.dart';
 
 import '../database_comunication/add_beer_screen.dart';
 
-class Home extends StatefulWidget {
+class HomeScreen extends StatefulWidget {
   static const String routeName = "/home";
-  const Home({Key? key}) : super(key: key);
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
-  State<Home> createState() => _HomeState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeState extends State<Home> with TickerProviderStateMixin {
+class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   late TabController _tabController;
 
   @override

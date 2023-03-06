@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:untitled/features/home/home_screen.dart';
 
 class AddBeerForm extends StatefulWidget {
   final String barcode;
@@ -38,7 +39,7 @@ class _AddBeerFormState extends State<AddBeerForm> {
       _styleController.clear();
       _alcoholContentController.clear();
 
-      Navigator.popAndPushNamed(context, "/");
+      Navigator.popAndPushNamed(context, HomeScreen.routeName);
 
     } catch (error) {
       ScaffoldMessenger.of(context).showSnackBar(
