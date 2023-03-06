@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:untitled/features/home/home_tab.dart';
 
-import '../database_comunication/add_beer_screen.dart';
+import '../database_communication/add_beer_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String routeName = "/home";

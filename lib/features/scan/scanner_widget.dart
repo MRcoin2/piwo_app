@@ -3,8 +3,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
-import 'package:untitled/features/database_comunication/add_beer_screen.dart';
-import 'package:untitled/features/database_comunication/utils.dart';
+import 'package:untitled/features/database_communication/add_beer_screen.dart';
+import 'package:untitled/features/database_communication/utils.dart';
 
 class Scanner extends StatefulWidget {
   const Scanner({Key? key}) : super(key: key);
