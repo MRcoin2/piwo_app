@@ -44,10 +44,12 @@ void main() async {
       // fontFamily: GoogleFonts.notoSans().fontFamily,
     ),
     themeMode: ThemeMode.system,
-    initialRoute: HomeScreen.routeName,
+    initialRoute: '/',
     routes: {'/': (ctx) => AuthScreen(),
       HomeScreen.routeName: (ctx) => HomeScreen(),
       ScanScreen.routeName: (ctx) => ScanScreen(),
+      ScanScreen.routeName: (ctx) => ScanScreen(),
+
       // AddBeerScreen.routeName: (ctx) => AddBeerScreen(),
     },
     onGenerateRoute: (settings) {
