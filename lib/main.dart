@@ -2,6 +2,8 @@ import 'dart:typed_data';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:untitled/features/database_comunication/add_beer_screen.dart';
+import 'package:untitled/features/database_comunication/utils.dart';
 import 'package:untitled/features/home/home_screen.dart';
 import 'package:untitled/features/scan/scan_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -45,11 +47,22 @@ void main() async {
     routes: {
       '/': (ctx) => Home(),
       ScanScreen.routeName: (ctx) => ScanScreen(),
+      // AddBeerScreen.routeName: (ctx) => AddBeerScreen(),
     },
     onGenerateRoute: (settings) {
       print(settings.arguments);
-      // if (settings.name == '/meal-detail') {
-      //   return ...;
+      if (settings.name == AddBeerScreen.routeName) {
+        final args = settings.arguments as BeerData;
+        return MaterialPageRoute(
+          builder: (context) {
+            return AddBeerScreen(
+              barcodeId: args.barcodeId,
+            );
+          },
+        );
+      }
+      assert(false, 'Need to implement ${settings.name}');
+        // return ...;
       // } else if (settings.name == '/something-else') {
       //   return ...;
       // }

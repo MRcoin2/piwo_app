@@ -55,7 +55,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       body: TabBarView(
-        children: const [HomeTab(), AddBeerScreen()],
+        children: const [HomeTab(), HomeTab()],
         controller: _tabController,
       ),
     );
