@@ -31,7 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text('Splash Screen'),//TODO create app loading animation
+        child: CircularProgressIndicator(),//TODO create app loading animation
       ),
     );
   }

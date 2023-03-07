@@ -16,6 +16,8 @@ class Scanner extends StatefulWidget {
 }
 
 class _ScannerState extends State<Scanner> {
+  bool _flashOn = false;
+
   @override
   Widget build(BuildContext context) {
     return Stack(children: [
@@ -25,9 +27,9 @@ class _ScannerState extends State<Scanner> {
         child: MobileScanner(
           // Initialize the MobileScanner widget with a MobileScannerController
           controller: MobileScannerController(
-            facing: CameraFacing.back, // Use the back-facing camera
-            torchEnabled: false, // Disable the flashlight
-          ),
+              facing: CameraFacing.back, // Use the back-facing camera
+              torchEnabled: _flashOn, // Disable the flashlight
+              detectionTimeoutMs: 2000),
           // Set the onDetect callback to handle the detected barcode
           onDetect: (capture) async {
             final List<Barcode> barcodes = capture.barcodes;
@@ -48,10 +50,9 @@ class _ScannerState extends State<Scanner> {
                       builder: (BuildContext context,
                           AsyncSnapshot<DocumentSnapshot> snapshot) {
                         if (snapshot.hasError) {
-                          return Text('Error getting document: ${snapshot.error}');
-                        }
-
-                        if (snapshot.connectionState ==
+                          return Text(
+                              'Error getting document: ${snapshot.error}');
+                        } else if (snapshot.connectionState ==
                             ConnectionState.waiting) {
                           // Display a loading animation while the document is being fetched
                           return Center(
@@ -60,7 +61,8 @@ class _ScannerState extends State<Scanner> {
                         }
 
                         // Check if the document exists
-                        if (snapshot.data != null && snapshot.data!.exists) {
+                        else if (snapshot.data != null &&
+                            snapshot.data!.exists) {
                           //TODO add beer to users collection in firestore
                           // Document exists, show success message
                           return Column(
@@ -82,12 +84,26 @@ class _ScannerState extends State<Scanner> {
                           );
                         } else {
                           // Document does not exist, navigate to AddBeerScreen
-                          Navigator.pushReplacementNamed(
-                            context,
-                            AddBeerScreen.routeName,
-                            arguments: BeerData(barcode.rawValue.toString()),
+                          return Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                "Potential new beer found.",
+                              ),
+                              SizedBox(height: 16),
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                  Navigator.pushNamed(
+                                    context,
+                                    AddBeerScreen.routeName,
+                                    arguments: BeerData(barcode.rawValue.toString()),
+                                  );
+                                },
+                                child: Text('OK'),
+                              ),
+                            ],
                           );
-                          return SizedBox.shrink();
                         }
                       },
                     ),
@@ -102,7 +118,7 @@ class _ScannerState extends State<Scanner> {
       SvgPicture.asset(
         "assets/svg/scan_overlay.svg",
         colorFilter:
-        ColorFilter.mode(Theme.of(context).primaryColor, BlendMode.srcIn),
+            ColorFilter.mode(Theme.of(context).primaryColor, BlendMode.srcIn),
       ),
     ]);
   }
