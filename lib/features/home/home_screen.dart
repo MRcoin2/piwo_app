@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:untitled/features/home/home_tab.dart';
 
+import 'menu_tab.dart';
+
 class HomeScreen extends StatefulWidget {
   static const String routeName = "/home";
   HomeScreen({Key? key}) : super(key: key);
@@ -31,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(FirebaseAuth.instance.currentUser?.displayName ?? '')),//TODO change this
+      appBar: AppBar(title: _tabController.index==0?Text("Home Screen"):Text("Menu")),
       bottomNavigationBar: BottomNavigationBar(
         showSelectedLabels: false,
         showUnselectedLabels: false,
@@ -47,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             icon: Icon(Icons.home),
             label: "home",
           ),
-          BottomNavigationBarItem(icon: Icon(Icons.menu), label: "???")
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: "???")
         ],
       ),
       floatingActionButton: FloatingActionButton(
@@ -58,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       body: TabBarView(
-        children: const [HomeTab(), HomeTab()],
+        children: const [HomeTab(), MenuTab()],
         controller: _tabController,
       ),
     );
