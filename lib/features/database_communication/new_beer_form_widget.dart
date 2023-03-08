@@ -9,7 +9,7 @@ class AddBeerForm extends StatefulWidget {
   _AddBeerFormState createState() => _AddBeerFormState();
 }
 
-class _AddBeerFormState extends State<AddBeerForm> {
+class _AddBeerFormState extends State<AddBeerForm> {//TODO make the form submit on enter on last field
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController _nameController = TextEditingController();
@@ -31,7 +31,7 @@ class _AddBeerFormState extends State<AddBeerForm> {
       });
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Beer added successfully')),
+        const SnackBar(content: Text('Beer added successfully')),
       );
 
       _nameController.clear();
@@ -117,14 +117,14 @@ class _AddBeerFormState extends State<AddBeerForm> {
                 },
                 keyboardType: TextInputType.number,
               ),
-              SizedBox(height: 16.0),
+              const SizedBox(height: 16.0),
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     _submitForm();
                   }
                 },
-                child: Text('Add Beer'),
+                child: const Text('Add Beer'),
               ),
             ],
           ),

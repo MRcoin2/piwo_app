@@ -5,6 +5,8 @@ import 'package:untitled/features/home/home_screen.dart';
 
 class SignUpScreen extends StatefulWidget {
   static const routeName = '/sign_up';
+
+  const SignUpScreen({super.key});
   @override
   _SignUpScreenState createState() => _SignUpScreenState();
 }
@@ -20,7 +22,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Sign Up'),
+        title: const Text('Sign Up'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -31,7 +33,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             children: <Widget>[
               TextFormField(
                 controller: _displayNameController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Name',
                 ),
                 validator: (value) {
@@ -42,7 +44,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 },
               ),TextFormField(
                 controller: _emailController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Email',
                 ),
                 validator: (value) {
@@ -54,7 +56,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
               TextFormField(
                 controller: _passwordController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Password',
                 ),
                 obscureText: true,
@@ -62,13 +64,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   if (value!.isEmpty) {
                     return 'Please enter a password';
                   }
-                  if (value!.length < 6) {
+                  if (value.length < 6) {
                     return 'Password must be at least 6 characters';
                   }
                   return null;
                 },
               ),
-              SizedBox(height: 16.0),
+              const SizedBox(height: 16.0),
               ElevatedButton(
                 onPressed: () async {
                   //TODO make loading animation when waiting for firebase
@@ -78,10 +80,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         email: _emailController.text,
                         password: _passwordController.text,
                       );
-                      print(_displayNameController.text);
+                      debugPrint(_displayNameController.text);
                       await userCredential.user?.updateDisplayName(_displayNameController.text);
                       await userCredential.user?.reload();
-                      print("User Credential: ${FirebaseAuth.instance.currentUser}");
+                      debugPrint("User Credential: ${FirebaseAuth.instance.currentUser}");
                       Map<String,dynamic> userData = {"name":FirebaseAuth.instance.currentUser?.displayName,"last_login":FirebaseAuth.instance.currentUser?.metadata.lastSignInTime};
                       try{
                         FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser?.uid).set(userData);
@@ -94,12 +96,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           context: context,
                           builder: (BuildContext context) {
                             return AlertDialog(
-                              title: Text('Weak Password'),
-                              content: Text('Please choose a stronger password'),
+                              title: const Text('Weak Password'),
+                              content: const Text('Please choose a stronger password'),
                               actions: <Widget>[
                                 TextButton(
                                   onPressed: () => Navigator.of(context).pop(),
-                                  child: Text('OK'),
+                                  child: const Text('OK'),
                                 ),
                               ],
                             );
@@ -110,12 +112,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           context: context,
                           builder: (BuildContext context) {
                             return AlertDialog(
-                              title: Text('Email Already in Use'),
-                              content: Text('Please use a different email'),
+                              title: const Text('Email Already in Use'),
+                              content: const Text('Please use a different email'),
                               actions: <Widget>[
                                 TextButton(
                                   onPressed: () => Navigator.of(context).pop(),
-                                  child: Text('OK'),
+                                  child: const Text('OK'),
                                 ),
                               ],
                             );
@@ -126,12 +128,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           context: context,
                           builder: (BuildContext context) {
                             return AlertDialog(
-                              title: Text('Error'),
+                              title: const Text('Error'),
                               content: Text(e.message!),
                               actions: <Widget>[
                                 TextButton(
                                   onPressed: () => Navigator.of(context).pop(),
-                                  child: Text('OK'),
+                                  child: const Text('OK'),
                                 ),
                               ],
                             );
@@ -141,7 +143,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     }
                   }
                 },
-                child: Text('Sign Up'),
+                child: const Text('Sign Up'),
               ),
             ],
           ),

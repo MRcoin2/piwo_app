@@ -1,7 +1,5 @@
-import 'dart:typed_data';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:untitled/features/database_communication/add_beer_screen.dart';
 import 'package:untitled/features/database_communication/utils.dart';
 import 'package:untitled/features/home/home_screen.dart';
@@ -47,16 +45,16 @@ void main() async {
     ),
     themeMode: ThemeMode.system,
     initialRoute: '/',
-    routes: {'/': (ctx) => SplashScreen(),
-      AuthScreen.routeName: (ctx) => AuthScreen(),
-      HomeScreen.routeName: (ctx) => HomeScreen(),
-      ScanScreen.routeName: (ctx) => ScanScreen(),
-      SignUpScreen.routeName: (ctx) => SignUpScreen(),
+    routes: {'/': (ctx) =>  SplashScreen(),
+      AuthScreen.routeName: (ctx) =>  AuthScreen(),
+      HomeScreen.routeName: (ctx) =>  HomeScreen(),
+      ScanScreen.routeName: (ctx) =>  ScanScreen(),
+      SignUpScreen.routeName: (ctx) =>  SignUpScreen(),
 
       // AddBeerScreen.routeName: (ctx) => AddBeerScreen(),
     },
     onGenerateRoute: (settings) {
-      print(settings.arguments);
+      debugPrint(settings.arguments as String?);
       if (settings.name == AddBeerScreen.routeName) {
         final args = settings.arguments as BeerData;
         return MaterialPageRoute(
@@ -68,6 +66,7 @@ void main() async {
         );
       }else if(settings.name == AddBeerScreen.routeName){}
       assert(false, 'Need to implement ${settings.name}');
+      return null;
         // return ...;
       // } else if (settings.name == '/something-else') {
       //   return ...;
@@ -76,7 +75,7 @@ void main() async {
     },
     onUnknownRoute: (settings) {
       return MaterialPageRoute(
-        builder: (ctx) => Text("err, wrong route"),
+        builder: (ctx) => const Text("err, wrong route"),
       );
     },
   ));

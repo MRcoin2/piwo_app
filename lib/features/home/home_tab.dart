@@ -5,14 +5,15 @@ class HomeTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
+    return ListView.builder(//TODO display a real list of user's beers
       itemBuilder: (BuildContext context, int index) {
         if (index < 100) {
           return ListTile(
-            leading: Icon(Icons.wine_bar),
+            leading: const Icon(Icons.wine_bar),
             trailing: Text("$index"),
           );
         }
+        return null;
       },
     );
   }

@@ -5,6 +5,8 @@ import 'package:untitled/features/user_login/sign_up_screen.dart';
 
 class AuthScreen extends StatefulWidget {
   static const routeName = "/auth_screen";
+
+  const AuthScreen({super.key});
   @override
   _AuthScreenState createState() => _AuthScreenState();
 }
@@ -25,13 +27,13 @@ class _AuthScreenState extends State<AuthScreen> {
     if (_isLoggedIn){Navigator.pushReplacementNamed(context, HomeScreen.routeName);}
     return Scaffold(
       appBar: AppBar(
-        title: Text('Beer Catalog App'),
+        title: const Text('Beer Catalog App'),
         actions: [
           TextButton(
               onPressed: () {
                 Navigator.pushNamed(context, SignUpScreen.routeName);
               },
-              child: Text("Sign Up"))
+              child: const Text("Sign Up"))
         ],
       ),
       body: SingleChildScrollView(
@@ -47,7 +49,7 @@ class _AuthScreenState extends State<AuthScreen> {
                   child: TextFormField(
                     controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
-                    decoration: InputDecoration(labelText: 'Email'),
+                    decoration: const InputDecoration(labelText: 'Email'),
                     validator: (value) {
                       if (value!.isEmpty || !value.contains('@')) {
                         return 'Please enter a valid email address';
@@ -61,7 +63,7 @@ class _AuthScreenState extends State<AuthScreen> {
                   child: TextFormField(
                     controller: _passwordController,
                     obscureText: true,
-                    decoration: InputDecoration(labelText: 'Password'),
+                    decoration: const InputDecoration(labelText: 'Password'),
                     validator: (value) {
                       if (value!.isEmpty || value.length < 6) {
                         return 'Password must be at least 6 characters long';
@@ -70,12 +72,12 @@ class _AuthScreenState extends State<AuthScreen> {
                     },
                   ),
                 ),
-                SizedBox(height: 16.0),
+                const SizedBox(height: 16.0),
                 _isLoading
-                    ? CircularProgressIndicator()
+                    ? const SizedBox(width:50,height:50,child: CircularProgressIndicator())
                     : ElevatedButton(
                         onPressed: _signIn,
-                        child: Text('Sign In'),
+                        child: const Text('Sign In'),
                       ),
               ],
             ),
@@ -114,7 +116,7 @@ class _AuthScreenState extends State<AuthScreen> {
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Could not sign in. Please try again later.'),
+            content: const Text('Could not sign in. Please try again later.'),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );

@@ -40,8 +40,8 @@ class _ScannerState extends State<Scanner> {
               showDialog(
                 context: context,
                 builder: (BuildContext context) {
-                  return AlertDialog(
-                    title: Text('Scanned Barcode'),
+                  return AlertDialog(//TODO extract this AlertDialog to another file
+                    title: const Text('Scanned Barcode'),
                     content: FutureBuilder<DocumentSnapshot>(
                       future: FirebaseFirestore.instance
                           .collection('beers')
@@ -55,7 +55,7 @@ class _ScannerState extends State<Scanner> {
                         } else if (snapshot.connectionState ==
                             ConnectionState.waiting) {
                           // Display a loading animation while the document is being fetched
-                          return Center(
+                          return const Center(
                             child: CircularProgressIndicator(),
                           );
                         }
@@ -71,14 +71,14 @@ class _ScannerState extends State<Scanner> {
                               Text(
                                 "${snapshot.data?.get('name')} was added to your collection.",
                               ),
-                              SizedBox(height: 16),
+                              const SizedBox(height: 16),
                               TextButton(
                                 onPressed: () {
                                   Navigator.of(context).pop();
                                   Navigator.pushReplacementNamed(
                                       context, HomeScreen.routeName);
                                 },
-                                child: Text('OK'),
+                                child: const Text('OK'),
                               ),
                             ],
                           );
@@ -87,10 +87,10 @@ class _ScannerState extends State<Scanner> {
                           return Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Text(
+                              const Text(
                                 "Potential new beer found.",
                               ),
-                              SizedBox(height: 16),
+                              const SizedBox(height: 16),
                               TextButton(
                                 onPressed: () {
                                   Navigator.of(context).pop();
@@ -100,7 +100,7 @@ class _ScannerState extends State<Scanner> {
                                     arguments: BeerData(barcode.rawValue.toString()),
                                   );
                                 },
-                                child: Text('OK'),
+                                child: const Text('OK'),
                               ),
                             ],
                           );

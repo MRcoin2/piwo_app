@@ -15,9 +15,9 @@ class _ScanScreenState extends State<ScanScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("scan piwo"),
+        title: const Text("scan piwo"),
       ),
-      body: Scanner(),
+      body: const Scanner(),//TODO add flash button to scan screen
     );
   }
 }
