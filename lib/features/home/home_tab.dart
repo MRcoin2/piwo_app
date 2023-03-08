@@ -1,20 +1,33 @@
 import 'package:flutter/material.dart';
 
+import '../beer_showcase/beer_card.dart';
+
 class HomeTab extends StatelessWidget {
   const HomeTab({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(//TODO display a real list of user's beers
-      itemBuilder: (BuildContext context, int index) {
-        if (index < 100) {
-          return ListTile(
-            leading: const Icon(Icons.wine_bar),
-            trailing: Text("$index"),
-          );
-        }
-        return null;
-      },
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: ListView(
+        children: [
+          BeerCard(
+            name: 'Pliny the Elder',
+            brewery: 'Russian River Brewing Company',
+            style: 'Double IPA',
+            alcoholContent: 8.0,
+            imageUrl: 'https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hd8/h68/8805931319326.png',
+          ),
+          BeerCard(
+            name: 'Westvleteren 12',
+            brewery: 'Sint-Sixtus Abbey',
+            style: 'Quadrupel',
+            alcoholContent: 10.2,
+            imageUrl: 'https://example.com/westvleteren.jpg',
+          ),
+          // Add more BeerCard widgets here for other consumed beers
+        ],
+      ),
     );
   }
 }

@@ -14,13 +14,10 @@ class _AddBeerScreenState extends State<AddBeerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(title: Text("New Beer Found !!! :D"),),
       body: SingleChildScrollView(
         child: Column(
-          children: [const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Text("New Beer Found !!! :D"),
-          ),Padding(
+          children: [Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(widget.barcodeId),
           ),

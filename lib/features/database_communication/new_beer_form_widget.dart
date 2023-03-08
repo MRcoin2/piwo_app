@@ -4,12 +4,15 @@ import 'package:untitled/features/home/home_screen.dart';
 
 class AddBeerForm extends StatefulWidget {
   final String barcode;
+
   const AddBeerForm({Key? key, required this.barcode}) : super(key: key);
+
   @override
   _AddBeerFormState createState() => _AddBeerFormState();
 }
 
-class _AddBeerFormState extends State<AddBeerForm> {//TODO make the form submit on enter on last field
+class _AddBeerFormState extends State<AddBeerForm> {
+  //TODO make the form submit on enter on last field
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController _nameController = TextEditingController();
@@ -40,7 +43,6 @@ class _AddBeerFormState extends State<AddBeerForm> {//TODO make the form submit 
       _alcoholContentController.clear();
 
       Navigator.popAndPushNamed(context, HomeScreen.routeName);
-
     } catch (error) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Error adding beer: $error')),
@@ -50,7 +52,8 @@ class _AddBeerFormState extends State<AddBeerForm> {//TODO make the form submit 
 
   Widget _buildTextFormField(TextEditingController controller, String label,
       String? Function(String?) validator,
-      {TextInputType keyboardType = TextInputType.text}) {
+      {TextInputType keyboardType = TextInputType.text,
+      void Function()? onEditingComplete}) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextFormField(
@@ -60,6 +63,7 @@ class _AddBeerFormState extends State<AddBeerForm> {//TODO make the form submit 
         ),
         keyboardType: keyboardType,
         validator: validator,
+        onEditingComplete: onEditingComplete,
       ),
     );
   }
@@ -67,68 +71,73 @@ class _AddBeerFormState extends State<AddBeerForm> {//TODO make the form submit 
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              _buildTextFormField(
-                _nameController,
-                'Name',
-                (value) {
-                  if (value!.isEmpty) {
-                    return 'Please enter a name';
-                  }
-                  return null;
-                },
-              ),
-              _buildTextFormField(
-                _breweryController,
-                'Brewery',
-                (value) {
-                  if (value!.isEmpty) {
-                    return 'Please enter a brewery';
-                  }
-                  return null;
-                },
-              ),
-              _buildTextFormField(
-                _styleController,
-                'Style',
-                (value) {
-                  if (value!.isEmpty) {
-                    return 'Please enter a style';
-                  }
-                  return null;
-                },
-              ),
-              _buildTextFormField(
-                _alcoholContentController,
-                'Alcohol Content',
-                (value) {
-                  if (value!.isEmpty) {
-                    return 'Please enter an alcohol content';
-                  }
-                  if (double.tryParse(value) == null) {
-                    return 'Please enter a valid number';
-                  }
-                  return null;
-                },
-                keyboardType: TextInputType.number,
-              ),
-              const SizedBox(height: 16.0),
-              ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    _submitForm();
-                  }
-                },
-                child: const Text('Add Beer'),
-              ),
-            ],
-          ),
+      padding: const EdgeInsets.all(8.0),
+      child: Form(
+        key: _formKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            _buildTextFormField(
+              _nameController,
+              'Name',
+              (value) {
+                if (value!.isEmpty) {
+                  return 'Please enter a name';
+                }
+                return null;
+              },
+            ),
+            _buildTextFormField(
+              _breweryController,
+              'Brewery',
+              (value) {
+                if (value!.isEmpty) {
+                  return 'Please enter a brewery';
+                }
+                return null;
+              },
+            ),
+            _buildTextFormField(
+              _styleController,
+              'Style',
+              (value) {
+                if (value!.isEmpty) {
+                  return 'Please enter a style';
+                }
+                return null;
+              },
+            ),
+            _buildTextFormField(
+              _alcoholContentController,
+              'Alcohol Content',
+              (value) {
+                if (value!.isEmpty) {
+                  return 'Please enter an alcohol content';
+                }
+                if (double.tryParse(value) == null) {
+                  return 'Please enter a valid number';
+                }
+                return null;
+              },
+              keyboardType: TextInputType.number,
+              onEditingComplete: () {
+                if (_formKey.currentState!.validate()) {
+                  _submitForm();
+                }
+              },
+            ),
+            const SizedBox(height: 16.0),
+            ElevatedButton(
+              onPressed: () {
+                if (_formKey.currentState!.validate()) {
+                  _submitForm();
+                }
+              },
+              child: const Text('Add Beer'),
+            ),
+          ],
         ),
-      );
+      ),
+    );
   }
 }

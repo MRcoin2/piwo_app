@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:untitled/features/home/home_tab.dart';
+import 'package:untitled/features/settings/edit_user_info_screen.dart';
+import 'package:untitled/features/user_login/login_screen.dart';
 
 import 'menu_tab.dart';
 
@@ -71,11 +73,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               ),
             ),
             Column(
-              children: const [//TODO crate screens for profile, collection and settings
+              children: [//TODO crate screens for profile, collection and settings
                 ListTile(
                   leading: Icon(Icons.person),
                   title: Text("Profile"),
                   trailing: Icon(Icons.keyboard_arrow_right),
+                  onTap: (){Navigator.pushNamed(context, EditProfilePage.routeName);},
                 ),
                 ListTile(
                   leading: Icon(Icons.collections_bookmark_outlined),
@@ -86,6 +89,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   leading: Icon(Icons.settings),
                   title: Text("Settings"),
                   trailing: Icon(Icons.keyboard_arrow_right),
+                ),ListTile(
+                  leading: Icon(Icons.logout),
+                  title: Text("Logout"),
+                  trailing: Icon(Icons.close),
+                  onTap: (){FirebaseAuth.instance.signOut();Navigator.of(context).popAndPushNamed(AuthScreen.routeName);},
                 )//TODO add a way to logout
               ],
             )
