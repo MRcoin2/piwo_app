@@ -12,7 +12,6 @@ class AddBeerForm extends StatefulWidget {
 }
 
 class _AddBeerFormState extends State<AddBeerForm> {
-  //TODO make the form submit on enter on last field
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController _nameController = TextEditingController();

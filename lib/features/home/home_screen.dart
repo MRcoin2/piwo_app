@@ -41,7 +41,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               _scaffoldKey.currentState?.openDrawer();
             },
             icon: const Icon(Icons.menu)),
-        title: _tabController.index == 0 ? const Text("Home Screen") : const Text("Menu"),
+        title: _tabController.index == 0
+            ? const Text("Home Screen")
+            : const Text("Menu"),
         actions: [
           IconButton(
               onPressed: () {
@@ -54,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.only(top:50),
+              padding: const EdgeInsets.only(top: 50),
               child: Container(
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
@@ -73,28 +75,45 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               ),
             ),
             Column(
-              children: [//TODO crate screens for profile, collection and settings
+              children: [
+                //TODO crate screens for profile, collection and settings
                 ListTile(
                   leading: Icon(Icons.person),
                   title: Text("Profile"),
                   trailing: Icon(Icons.keyboard_arrow_right),
-                  onTap: (){Navigator.pushNamed(context, EditProfilePage.routeName);},
+                  onTap: () {
+                    Navigator.pushNamed(context, EditProfilePage.routeName);
+                  },
                 ),
                 ListTile(
                   leading: Icon(Icons.collections_bookmark_outlined),
                   title: Text("My Collection"),
                   trailing: Icon(Icons.keyboard_arrow_right),
-                ),Padding(padding:EdgeInsets.all(30)),
+                ),
+                Padding(padding: EdgeInsets.all(30)),
                 ListTile(
                   leading: Icon(Icons.settings),
                   title: Text("Settings"),
                   trailing: Icon(Icons.keyboard_arrow_right),
-                ),ListTile(
-                  leading: Icon(Icons.logout),
-                  title: Text("Logout"),
-                  trailing: Icon(Icons.close),
-                  onTap: (){FirebaseAuth.instance.signOut();Navigator.of(context).popAndPushNamed(AuthScreen.routeName);},
-                )//TODO add a way to logout
+                ),
+                ListTile(
+                  leading: Icon(
+                    Icons.logout,
+                    color: Theme.of(context).colorScheme.error,
+                  ),
+                  title: Text("Logout",
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.error,
+                      )),
+                  trailing: Icon(
+                    Icons.close,
+                    color: Theme.of(context).colorScheme.error,
+                  ),
+                  onTap: () {
+                    FirebaseAuth.instance.signOut();
+                    Navigator.of(context).pushReplacementNamed(AuthScreen.routeName);
+                  },
+                )
               ],
             )
           ],
