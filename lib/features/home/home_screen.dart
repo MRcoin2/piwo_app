@@ -56,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.only(top: 50),
+              padding: const EdgeInsets.only(top: 50,bottom: 50),
               child: Container(
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,

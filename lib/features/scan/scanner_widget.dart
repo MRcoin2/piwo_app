@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
@@ -64,6 +65,8 @@ class _ScannerState extends State<Scanner> {
                         else if (snapshot.data != null &&
                             snapshot.data!.exists) {
                           //TODO add beer to users collection in firestore
+                          FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser?.uid).collection("beers").doc().set(
+                              {"barcode":barcode.rawValue,"timestamp":DateTime.now()});
                           // Document exists, show success message
                           return Column(
                             mainAxisSize: MainAxisSize.min,

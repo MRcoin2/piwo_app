@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:untitled/features/home/home_screen.dart';
 
@@ -30,6 +31,7 @@ class _AddBeerFormState extends State<AddBeerForm> {
         'brewery': _breweryController.text,
         'style': _styleController.text,
         'alcohol_content': double.parse(_alcoholContentController.text),
+        'added_by': FirebaseAuth.instance.currentUser?.uid,
       });
 
       ScaffoldMessenger.of(context).showSnackBar(
