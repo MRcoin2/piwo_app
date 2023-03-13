@@ -1,3 +1,3 @@
-# piwo_app
+# Piwo App 🍻
 
 App for tracking your beer consumption.
