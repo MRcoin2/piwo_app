@@ -14,3 +14,4 @@ Future<bool> checkIfBarcodeExists(String barcodeId) async {
 
   return snapshot.exists;
 }
+

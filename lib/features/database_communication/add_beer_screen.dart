@@ -21,7 +21,7 @@ class _AddBeerScreenState extends State<AddBeerScreen> {
             padding: const EdgeInsets.all(8.0),
             child: Text(widget.barcodeId),
           ),
-            AddBeerForm(barcode: widget.barcodeId),
+            NewBeerForm(barcode: widget.barcodeId),
           ],
         ),
       ),
