@@ -2,16 +2,14 @@ import 'package:flutter/material.dart';
 
 class BeerCard extends StatelessWidget {
   final String name;
-  final String brewery;
-  final String style;
+  final String brand;
   final double alcoholContent;
   final String? imageUrl;
 
   const BeerCard({
     Key? key,
     required this.name,
-    required this.brewery,
-    required this.style,
+    required this.brand,
     required this.alcoholContent,
     this.imageUrl,
   }) : super(key: key);
@@ -51,10 +49,7 @@ class BeerCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const SizedBox(height: 4),
-                        Text(brewery,
-                          style: Theme.of(context).textTheme.bodySmall,),
-                        const SizedBox(height: 4),
-                        Text(style,
+                        Text(brand,
                           style: Theme.of(context).textTheme.bodySmall,),
                         const SizedBox(height: 4),
                         Text('${alcoholContent.toStringAsFixed(1)}% ABV',

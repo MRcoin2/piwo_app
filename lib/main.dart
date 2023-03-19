@@ -1,13 +1,18 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:untitled/features/database_communication/add_beer_screen.dart';
 import 'package:untitled/features/database_communication/utils.dart';
+import 'package:untitled/features/friends/add_friend_screen.dart';
+import 'package:untitled/features/friends/friend_requests.dart';
 import 'package:untitled/features/home/home_screen.dart';
 import 'package:untitled/features/scan/scan_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:untitled/features/settings/edit_user_info_screen.dart';
+import 'package:untitled/features/settings/settings_screen.dart';
 import 'package:untitled/features/user_login/sign_up_screen.dart';
 import 'package:untitled/features/user_login/splash_screen.dart';
+import 'features/collection/collection_screen.dart';
 import 'features/user_login/login_screen.dart';
 import 'firebase_options.dart';
 
@@ -16,6 +21,8 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  FirebaseFirestore.instance.settings = const Settings(persistenceEnabled: true, cacheSizeBytes: Settings.CACHE_SIZE_UNLIMITED);
+
   runApp(MaterialApp(// This theme was made for FlexColorScheme version 6.1.1. Make sure
 // you use same or higher version, but still same major version. If
 // you use a lower version, some properties may not be supported. In
@@ -75,6 +82,10 @@ void main() async {
       ScanScreen.routeName: (ctx) =>  ScanScreen(),
       SignUpScreen.routeName: (ctx) =>  SignUpScreen(),
       EditProfilePage.routeName:(ctx)=> EditProfilePage(),
+      AddFriendPage.routeName:(ctx)=> AddFriendPage(),
+      FriendRequestsPage.routeName:(ctx)=> FriendRequestsPage(),
+      SettingsScreen.routeName:(ctx)=> SettingsScreen(),
+      CollectionScreen.routeName:(ctx)=> CollectionScreen(),
 
       // AddBeerScreen.routeName: (ctx) => AddBeerScreen(),
     },

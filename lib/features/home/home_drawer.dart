@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:untitled/features/collection/collection_screen.dart';
+import 'package:untitled/features/settings/settings_screen.dart';
 
 import '../settings/edit_user_info_screen.dart';
 import '../user_login/login_screen.dart';
@@ -46,12 +48,18 @@ class HomeDrawer extends StatelessWidget {
                 leading: Icon(Icons.collections_bookmark_outlined),
                 title: Text("My Collection"),
                 trailing: Icon(Icons.keyboard_arrow_right),
+                onTap: () {
+                  Navigator.pushNamed(context, CollectionScreen.routeName);
+                }
               ),
               Padding(padding: EdgeInsets.all(30)),
               ListTile(
                 leading: Icon(Icons.settings),
                 title: Text("Settings"),
                 trailing: Icon(Icons.keyboard_arrow_right),
+                onTap: () {
+                  Navigator.pushNamed(context, SettingsScreen.routeName);
+                }
               ),
               ListTile(
                 leading: Icon(

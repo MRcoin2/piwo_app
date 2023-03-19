@@ -96,7 +96,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             await userCredential.user?.updateDisplayName(_displayNameController.text);
                             await userCredential.user?.reload();
                             debugPrint("User Credential: ${FirebaseAuth.instance.currentUser}");
-                            Map<String,dynamic> userData = {"name":FirebaseAuth.instance.currentUser?.displayName,"last_login":FirebaseAuth.instance.currentUser?.metadata.lastSignInTime};
+                            Map<String,dynamic> userData = {"username":FirebaseAuth.instance.currentUser?.displayName,"last_login":FirebaseAuth.instance.currentUser?.metadata.lastSignInTime};
                             try{
                               FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser?.uid).set(userData);
                             }catch (e){/*TODO implement error handling for creating new user entry in database*/}

@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class EditProfilePage extends StatefulWidget {
   static const routeName = "/edit_profile_page";
+
   const EditProfilePage({Key? key}) : super(key: key);
 
   @override
@@ -52,55 +53,95 @@ class _EditProfilePageState extends State<EditProfilePage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              TextFormField(
-                initialValue: _displayName,
-                decoration: const InputDecoration(labelText: 'Display Name'),
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Please enter a display name';
-                  }
-                  return null;
-                },
-                onChanged: (value) {
-                  setState(() {
-                    _displayName = value;
-                  });
-                },
+        child: Column(
+          children: [
+            //circle avatar witha a small edit button
+            Stack(
+              children: [
+                const CircleAvatar(
+                  radius: 100,
+                  backgroundColor: Colors.grey,
+                  child: Icon(Icons.person, size: 50),
+                ),//circular edit button on top of the avatar
+                Positioned(
+                  bottom: 0,
+                  right: 0,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,color: Theme.of(context).colorScheme.secondary,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: const Icon(
+                        Icons.edit,
+                        color: Colors.white,
+                        size: 30,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextFormField(
+                      initialValue: _displayName,
+                      decoration:
+                          const InputDecoration(labelText: 'Display Name'),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter a display name';
+                        }
+                        return null;
+                      },
+                      onChanged: (value) {
+                        setState(() {
+                          _displayName = value;
+                        });
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextFormField(
+                      initialValue: _email,
+                      decoration: const InputDecoration(labelText: 'Email'),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter an email address';
+                        }
+                        if (!value.contains('@')) {
+                          return 'Please enter a valid email address';
+                        }
+                        return null;
+                      },
+                      onChanged: (value) {
+                        setState(() {
+                          _email = value;
+                        });
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          _updateProfile();
+                        }
+                      },
+                      child: const Text('Save Changes'),
+                    ),
+                  ),
+                ],
               ),
-              TextFormField(
-                initialValue: _email,
-                decoration: const InputDecoration(labelText: 'Email'),
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Please enter an email address';
-                  }
-                  if (!value.contains('@')) {
-                    return 'Please enter a valid email address';
-                  }
-                  return null;
-                },
-                onChanged: (value) {
-                  setState(() {
-                    _email = value;
-                  });
-                },
-              ),
-              const SizedBox(height: 16.0),
-              ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    _updateProfile();
-                  }
-                },
-                child: const Text('Save Changes'),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

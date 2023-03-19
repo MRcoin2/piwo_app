@@ -13,15 +13,13 @@ class HomeTab extends StatelessWidget {
         children: [
           BeerCard(
             name: 'Pliny the Elder',
-            brewery: 'Russian River Brewing Company',
-            style: 'Double IPA',
+            brand: 'Russian River Brewing Company',
             alcoholContent: 8.0,
             imageUrl: 'https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hd8/h68/8805931319326.png',
           ),
           BeerCard(
             name: 'Westvleteren 12',
-            brewery: 'Sint-Sixtus Abbey',
-            style: 'Quadrupel',
+            brand: 'Sint-Sixtus Abbey',
             alcoholContent: 10.2,
             imageUrl: 'https://example.com/westvleteren.jpg',
           ),
