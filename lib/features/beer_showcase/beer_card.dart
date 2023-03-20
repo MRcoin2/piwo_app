@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// widget for displaying a recent beer
 class BeerCard extends StatelessWidget {
   final String name;
   final String brand;

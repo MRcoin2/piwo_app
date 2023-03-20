@@ -40,6 +40,8 @@ dependencies:
   flutter_svg: ^2.0.2
   cloud_firestore: ^4.4.3
   firebase_auth: ^4.2.9
+  firebase_storage: ^11.0.16
+  firebase_core: ^2.7.1
 
 dev_dependencies:
   flutter_test:

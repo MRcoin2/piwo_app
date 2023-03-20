@@ -18,15 +18,14 @@ import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // initialize firebase with persistence enabled
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   FirebaseFirestore.instance.settings = const Settings(persistenceEnabled: true, cacheSizeBytes: Settings.CACHE_SIZE_UNLIMITED);
 
-  runApp(MaterialApp(// This theme was made for FlexColorScheme version 6.1.1. Make sure
-// you use same or higher version, but still same major version. If
-// you use a lower version, some properties may not be supported. In
-// that case you can also remove them after copying the theme to your app.
+  runApp(MaterialApp(
     theme: FlexThemeData.light(
       colors: const FlexSchemeColor(
         primary: Color(0xff9b4d1f),
@@ -48,8 +47,6 @@ void main() async {
       visualDensity: FlexColorScheme.comfortablePlatformDensity,
       useMaterial3: true,
       swapLegacyOnMaterial3: true,
-      // To use the playground font, add GoogleFonts package and uncomment
-      // fontFamily: GoogleFonts.notoSans().fontFamily,
     ),
     darkTheme: FlexThemeData.dark(
       colors: const FlexSchemeColor(
@@ -71,8 +68,6 @@ void main() async {
       visualDensity: FlexColorScheme.comfortablePlatformDensity,
       useMaterial3: true,
       swapLegacyOnMaterial3: true,
-      // To use the Playground font, add GoogleFonts package and uncomment
-      // fontFamily: GoogleFonts.notoSans().fontFamily,
     ),
     themeMode: ThemeMode.system,
     initialRoute: '/',
@@ -86,8 +81,6 @@ void main() async {
       FriendRequestsPage.routeName:(ctx)=> FriendRequestsPage(),
       SettingsScreen.routeName:(ctx)=> SettingsScreen(),
       CollectionScreen.routeName:(ctx)=> CollectionScreen(),
-
-      // AddBeerScreen.routeName: (ctx) => AddBeerScreen(),
     },
     onGenerateRoute: (settings) {
       debugPrint(settings.arguments.toString());
@@ -103,11 +96,6 @@ void main() async {
       }else if(settings.name == AddBeerScreen.routeName){}
       assert(false, 'Need to implement ${settings.name}');
       return null;
-        // return ...;
-      // } else if (settings.name == '/something-else') {
-      //   return ...;
-      // }
-      // return MaterialPageRoute(builder: (ctx) => CategoriesScreen(),);
     },
     onUnknownRoute: (settings) {
       return MaterialPageRoute(
