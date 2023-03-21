@@ -47,7 +47,6 @@ class _CollectionScreenState extends State<CollectionScreen> {
       appBar: AppBar(
         title: const Text('Collection'),
       ),
-      // TODO change this to a listview with the brand logos on the left and progress bars for beers collected for each brand
       body: ListView.builder(
         itemCount: _brands.length,
         itemBuilder: (ctx, index) {
