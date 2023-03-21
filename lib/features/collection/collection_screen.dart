@@ -23,7 +23,7 @@ class _CollectionScreenState extends State<CollectionScreen> {
 
   Future<void> _loadBrands() async {
     final QuerySnapshot brandsSnapshot =
-    await _firestore.collection('brands').get();
+        await _firestore.collection('brands').get();
     setState(() {
       _brands = brandsSnapshot.docs;
     });
@@ -47,36 +47,34 @@ class _CollectionScreenState extends State<CollectionScreen> {
       appBar: AppBar(
         title: const Text('Collection'),
       ),
-      body: GridView.builder(
-        padding: const EdgeInsets.all(10),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          childAspectRatio: 1,
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
-        ),
+      // TODO change this to a listview with the brand logos on the left and progress bars for beers collected for each brand
+      body: ListView.builder(
         itemCount: _brands.length,
-        itemBuilder: (BuildContext ctx, int index) {
+        itemBuilder: (ctx, index) {
           final brand = _brands[index];
           final logoRef = _storage.ref('brands/${brand.id}/logo.png');
           return FutureBuilder<String>(
             future: logoRef.getDownloadURL(),
             builder: (BuildContext ctx, AsyncSnapshot<String> snapshot) {
               final logoUrl = snapshot.data ?? '';
-              return InkWell(
-                onTap: () {
-                  // Navigate to the details screen for this brand
-                },
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
+              return Card(
+                child: ExpansionTile(
+                  leading: _buildBrandLogo(logoUrl),
+                  title: Text(brand['name']),
+                  subtitle: LinearProgressIndicator(
+                    value: 0.5, //TODO calculate this value based on user data
+                  ),
+                  trailing: Icon(Icons.expand_more),
                   children: [
-                    _buildBrandLogo(logoUrl),
-                    const SizedBox(height: 10),
-                    Text(
-                      brand['name'],
-                      style: Theme.of(context).textTheme.headline6,
-                      textAlign: TextAlign.center,
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: [
+                          Card(child: Text('Beer 1')),
+                          Card(child: Text('Beer 2')),
+                          Card(child: Text('Beer 3')),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -88,3 +86,44 @@ class _CollectionScreenState extends State<CollectionScreen> {
     );
   }
 }
+
+//GridView.builder(
+//         padding: const EdgeInsets.all(10),
+//         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+//           crossAxisCount: 2,
+//           childAspectRatio: 1,
+//           crossAxisSpacing: 10,
+//           mainAxisSpacing: 10,
+//         ),
+//         itemCount: _brands.length,
+//         itemBuilder: (BuildContext ctx, int index) {
+//           final brand = _brands[index];
+//           final logoRef = _storage.ref('brands/${brand.id}/logo.png');
+//           return FutureBuilder<String>(
+//             future: logoRef.getDownloadURL(),
+//             builder: (BuildContext ctx, AsyncSnapshot<String> snapshot) {
+//               final logoUrl = snapshot.data ?? '';
+//               return InkWell(
+//                 onTap: () {
+//                   // Navigate to the beers for this brand
+//                 },
+//                 child: Card(
+//                   child: Column(
+//                     crossAxisAlignment: CrossAxisAlignment.center,
+//                     mainAxisAlignment: MainAxisAlignment.center,
+//                     children: [
+//                       _buildBrandLogo(logoUrl),
+//                       const SizedBox(height: 10),
+//                       Text(
+//                         brand['name'],
+//                         style: Theme.of(context).textTheme.headline6,
+//                         textAlign: TextAlign.center,
+//                       ),
+//                     ],
+//                   ),
+//                 ),
+//               );
+//             },
+//           );
+//         },
+//       ),
